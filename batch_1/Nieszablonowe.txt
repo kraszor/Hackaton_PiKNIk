@@ -1,0 +1,40 @@
+++++++++
+[				Wszystkie litery z hasla zawieraja sie w przedziale 65|85
+>++++++++++			wiec przygotowalem sobie 3 elementy o wartosciach 80|70|60
+<-				plus czwarty element o wartosci 32 (spacja)
+]        1#80			Nastepnie po nich skakalem | modyfikowalem ich wartosci i wypisywalem je
++++++++				Legenda oznaczen: 2#(numer elementu)32(wartosc elementu)x(wypisanie do terminala)
+[
+>>++++++++++
+<<-
+]        2#70
+++++++
+[
+>>>++++++++++
+<<<-
+]        3#60
+++++
+[
+>>>>++++++++
+<<<<-
+]        4#32
+>.       1#x
+>>+++++. 3#65x    
+<+++++.  2#75x
+<+++++.  1#85x
+>-.      2#74x
+>>.      4#x
+<<<--.   1#83x
+>-x.     2#73x
+>++++.   3#69x
+>.       4#x
+<<+++++. 2#78
+>----.   3#65
+>.       4#x
+<<<---.  1#80x
+>-----.  2#73x
+++.      2#75x
++++.     2#78x
+-----.   2#73x
+++.      2#75x
+>>+.     4#33x
