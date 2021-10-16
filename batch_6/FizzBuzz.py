@@ -7,6 +7,7 @@ import time
 # Fizz -> Wóda
 # Buzz -> Piwo
 
+# koniecznie z dźwiękiem
 
 def open_music(text):
     engine = pyttsx3.init()
