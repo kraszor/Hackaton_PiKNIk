@@ -14,6 +14,8 @@ enum actions{
     subtraction,
     multiplication,
     division,
+    algeb_to_trig,
+    trig_to_algeb
 };
 
 
@@ -184,28 +186,28 @@ string to_algebraic_form(double module, double arg){
 }
 
 
-
 int main(){
     while(true){
         string choice;
         string number;
         int new_choice;
         vector<double> values, algebraic_result, exp_result;
-        string sign1, sign2, sign3, operation;
+        string sign1, sign2, sign3, operation, representation;
         bool condition = false;
+        double c_module, arg;
 
         while (condition == false){
             cout << "\n\nCalculator\n\n";
-            cout << "1. Addition \n2. Subtraction \n3. Multiplication \n4. Division \n5. Exit\n\n";
+            cout << "1. Addition \n2. Subtraction \n3. Multiplication \n4. Division \n5. Convert algebraic form to trigonometric \n6. Convert trigonometric form to algebraic\n7. Exit\n\n";
             cout << "Enter the type of operation: ";
             cin >> choice;
             if (checking_int(choice)){
                 new_choice = stoi(choice);
-                if (new_choice >= 1 && new_choice <=4){
+                if (new_choice >= 1 && new_choice <=6){
                     condition = true;
                 }
 
-                else if (new_choice == 5){
+                else if (new_choice == 7){
                     cout << "\n\nSee you next time\n\n";
                     exit(0);
                 }
@@ -219,31 +221,94 @@ int main(){
             }
         }
 
-        for (int i=0; i<4; i++){
-            if (i < 2){
-                cout << "\nEnter the real and imaginary part of the first complex number (a + bi): ";
-            }
-            else{
-                cout << "\nEnter the real and imaginary part of the second complex number (a + bi): ";
-            }
-            condition = false;
-            while (condition == false){
-                if ((i == 0) || (i == 2)){
-                    cout << "\na = ";
+        if (new_choice <= 4){
+            for (int i=0; i<4; i++){
+                if (i < 2){
+                    cout << "\nEnter the real and imaginary part of the first complex number (a + bi): ";
                 }
                 else{
-                    cout << "\nb = ";
+                    cout << "\nEnter the real and imaginary part of the second complex number (a + bi): ";
                 }
-                cin >> number;
-                if (checking_digits(number)){
-                    values.push_back(stod(number));
-                    condition = true;
-                }
-                else{
-                    cout << "Not a number\n";
+                condition = false;
+                while (condition == false){
+                    if ((i == 0) || (i == 2)){
+                        cout << "\na = ";
+                    }
+                    else{
+                        cout << "\nb = ";
+                    }
+                    cin >> number;
+                    if (checking_digits(number)){
+                        values.push_back(stod(number));
+                        condition = true;
+                    }
+                    else{
+                        cout << "Not a number\n";
+                    }
                 }
             }
         }
+
+        if (new_choice == 5) {
+            for (int i=0; i<2; i++){
+                if (i < 2){
+                    cout << "\nEnter the real and imaginary part of the first complex number (a + bi): ";
+                }
+                condition = false;
+                while (condition == false){
+                    if ((i == 0) || (i == 2)){
+                        cout << "\na = ";
+                    }
+                    else{
+                        cout << "\nb = ";
+                    }
+                    cin >> number;
+                    if (checking_digits(number)){
+                        values.push_back(stod(number));
+                        condition = true;
+                    }
+                    else{
+                        cout << "Not a number\n";
+                    }
+                }
+            }
+        }
+
+        else {
+            for (int i=0; i<2; i++){
+                if (i == 0){
+                    cout << "\nEnter module of complex number: ";
+                }
+                else {
+                    cout << "\nEnter arg of complex number (in radians for ex.: 0.5): ";
+                }
+                condition = false;
+                while (condition == false){
+                    if (i == 0){
+                        cout << "\n|z| = ";
+                        cin >> number;
+                        if (checking_digits(number)){
+                            c_module = stod(number);
+                            condition = true;
+                        }
+                        else{
+                            cout << "Not a number\n";
+                        }
+                    }
+                    else{
+                        cout << "\narg = ";
+                        cin >> number;
+                        if (checking_digits(number)){
+                            arg = stod(number);
+                            condition = true;
+                        }
+                        else{
+                            cout << "Not a number\n";
+                        }
+                    }
+                }
+        }
+
 
         switch(new_choice)
         {
@@ -270,25 +335,53 @@ int main(){
                 algebraic_result = divide_numbers(values);
                 operation = " / ";
             }
+            break;
+            case algeb_to_trig:
+            {
+                if (!values.empty()){
+                    vector<double> exp = exponential_form(values);
+                    representation = to_trigonometric_form(values, exp);
+                    cout << representation;
+                }
+                else{
+                    cout << "\n\nDon't divide by zero\n\n";
+                }
+
+            }
+            break;
+            case trig_to_algeb:
+            {
+                if (!values.empty()){
+                    representation = to_algebraic_form(c_module, arg);
+                    cout << representation;
+                }
+                else{
+                    cout << "\n\nDon't divide by zero\n\n";
+                }
+            }
+
 
         }
-        if (!algebraic_result.empty())
-        {
-            exp_result = exponential_form(algebraic_result);
-            sign1 = set_sign(values[1]);
-            sign2 = set_sign(values[3]);
-            sign3 = set_sign(algebraic_result[1]);
-            cout << "\n(" << values[0] << sign1 << abs(values[1]) << "i)" << operation;
-            cout << "(" << values[2] << sign2 << abs(values[3]) << "i) = ";
-            cout << algebraic_result[0] << sign3 << abs(algebraic_result[1]) << "i";
-            cout << " = " << exp_result[0] << "e^(" << exp_result[1] << "PIi)        arg = " << exp_result[2]<<endl;
-            cout << to_trigonometric_form(algebraic_result, exp_result) << endl <<endl;
-            cout << to_algebraic_form(exp_result[0], exp_result[1]);
+
+        if (new_choice != 5 && new_choice != 6){
+            if (!algebraic_result.empty()) {
+                exp_result = exponential_form(algebraic_result);
+                sign1 = set_sign(values[1]);
+                sign2 = set_sign(values[3]);
+                sign3 = set_sign(algebraic_result[1]);
+                cout << "\n(" << values[0] << sign1 << abs(values[1]) << "i)" << operation;
+                cout << "(" << values[2] << sign2 << abs(values[3]) << "i) = ";
+                cout << algebraic_result[0] << sign3 << abs(algebraic_result[1]) << "i";
+                cout << " = " << exp_result[0] << "e^(" << exp_result[1] << "PIi)        arg = " << exp_result[2]<<endl;
+                cout << to_trigonometric_form(algebraic_result, exp_result) << endl <<endl;
+                cout << to_algebraic_form(exp_result[0], exp_result[1]);
+            }
+            else
+            {
+                cout << "\n\nDon't divide by zero\n\n";
+            }
         }
-        else
-        {
-            cout << "\n\nDon't divide by zero\n\n";
-        }
+
     }
     return 0;
 }
