@@ -2,6 +2,7 @@ import keyboard
 import pyttsx3
 import time
 
+# dla lepszych efektów trzeba mieć polską wersję systemu
 
 def play_sound_regular(letter, text):
     engine = pyttsx3.init()
