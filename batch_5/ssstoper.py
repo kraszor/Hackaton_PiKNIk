@@ -20,7 +20,7 @@ def enter_val(text, is_option, value_range):
 
 
 def timer():
-    print("\nTIMER")
+    print("TIMER")
     print("Enter values \n")
 
     hours = enter_val("hours", False, 0)
@@ -29,17 +29,20 @@ def timer():
 
     initial_time = hours * 3600 + minutes * 60 + seconds
 
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("Choose option\n")
     print("1. Start\n2. Exit")
     option = enter_val("option", True, 2)
 
     if option == 1:
-        print(f"\n\nTIME: {hours}: {minutes}: {seconds}\n\n")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"TIME: {hours}: {minutes}: {seconds}\n\n")
         for i in range(1, initial_time+1):
             current_time = initial_time - i
             time.sleep(1)
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"TIME: {current_time // 3600}: {(current_time % 3600) // 60}: {((current_time % 3600) % 60)}\n\n")
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("End of time")
         winsound.PlaySound("song.wav", winsound.SND_FILENAME)
 
@@ -48,8 +51,7 @@ def timer():
 
 
 def stopwatch():
-    print("\nStopwatch")
-
+    print("Stopwatch\n")
     print("Choose option\n")
     print("1. Start\n2. Exit")
     print("\nTo stop press CTRL+C")
@@ -59,8 +61,9 @@ def stopwatch():
         pause_time = 0
         while True:
             try:
-                time.sleep(0.01)
+                time.sleep(0.02)
                 current_time = time.time() - start_time - pause_time
+                print(current_time)
                 formated_hours = '{:.0f}'.format(int('{:.0f}'.format(current_time)) // 3600)
                 formated_minutes = '{:.0f}'.format((int('{:.0f}'.format(current_time)) % 3600) // 60)
                 formated_seconds = '{:.0f}'.format(((int('{:.0f}'.format(current_time)) % 3600) % 60))
@@ -77,7 +80,8 @@ def stopwatch():
 
                     decision = input("Decision: ")
                     if decision == "e":
-                        print(f"\n\nTotal Time: {formated_hours}:{formated_minutes}:{formated_seconds}:{formated_mseconds}\n\n")
+                        os.system('cls' if os.name == 'nt' else 'clear')
+                        print(f"Total Time: {formated_hours}:{formated_minutes}:{formated_seconds}:{formated_mseconds}\n\n")
                         return
                     pause_time += time.time() - start_pause_time
                     break
@@ -90,9 +94,11 @@ def stopwatch():
 
 def clock():
     while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("Select type of clock\n")
         print("1. Timer\n2. Stopwatch\n")
         option = enter_val("type (number)", True, 2)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
         if option == 1:
             timer()
@@ -108,3 +114,6 @@ def clock():
 
         elif decision == 2:
             return
+
+
+clock()
